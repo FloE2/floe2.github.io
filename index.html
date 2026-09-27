@@ -76,6 +76,12 @@ body {
 .entete p#sousTitre { margin: 10px 0 0; color: var(--encre-douce); font-size: 17px; }
 .terrain { width: 260px; height: auto; display: block; }
 .terrain path, .terrain circle, .terrain line, .terrain rect { fill: none; stroke-width: 3; stroke-linecap: round; }
+.terrain .rond { fill: var(--fond); }
+.terrain .ydm {
+  font: 700 19px "Barlow Condensed", "Arial Narrow", sans-serif;
+  letter-spacing: .04em; fill: var(--encre);
+  transform-box: fill-box; transform-origin: center;
+}
 @media (max-width: 700px) { .terrain { display: none; } .entete { grid-template-columns: 1fr; padding-top: 28px; } }
 
 /* ====== Recherche ====== */
@@ -200,6 +206,8 @@ section h2 small { font: 500 15px "Barlow", sans-serif; color: var(--encre-douce
   .terrain .trace:nth-child(4) { animation-delay: .45s; }
   .terrain .trace:nth-child(5) { animation-delay: .6s; }
   @keyframes tracer { to { stroke-dashoffset: 0; } }
+  .terrain .ydm { opacity: 0; animation: apparaitre .6s cubic-bezier(.2,1.4,.4,1) 1.6s forwards; }
+  @keyframes apparaitre { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
 }
 </style>
 </head>
@@ -216,9 +224,10 @@ section h2 small { font: 500 15px "Barlow", sans-serif; color: var(--encre-douce
     <svg class="terrain" viewBox="0 0 260 150" aria-hidden="true">
       <rect class="trace" pathLength="1" x="4" y="10" width="252" height="130" rx="2" stroke="var(--bleu)"/>
       <line class="trace" pathLength="1" x1="130" y1="10" x2="130" y2="140" stroke="var(--rouge)"/>
-      <circle class="trace" pathLength="1" cx="130" cy="75" r="26" stroke="var(--rouge)"/>
+      <circle class="trace rond" pathLength="1" cx="130" cy="75" r="26" stroke="var(--rouge)"/>
       <path class="trace" pathLength="1" d="M4 30 H60 V120 H4" stroke="var(--vert)"/>
       <path class="trace" pathLength="1" d="M256 22 A70 70 0 0 0 256 128" stroke="var(--jaune)"/>
+      <text class="ydm" x="130" y="75" text-anchor="middle" dominant-baseline="central">YDM</text>
     </svg>
   </header>
 
