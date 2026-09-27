@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mes applis EPS</title>
+<meta name="theme-color" content="#F2F4F1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Applis EPS">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏅</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ====== Couleurs : les lignes de terrain du gymnase ====== */
+:root {
+  --fond: #F2F4F1;
+  --surface: #FFFFFF;
+  --encre: #17212B;
+  --encre-douce: #56616C;
+  --trait: #D9DED8;
+  --bleu: #1E5DBA;     /* volley */
+  --rouge: #CC3A2E;    /* basket */
+  --vert: #1D8047;     /* badminton */
+  --jaune: #C99A00;    /* hand */
+  --violet: #6A4FB5;
+  --focus: #1E5DBA;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #121820; --surface: #1B232D; --encre: #E8ECEF; --encre-douce: #9AA6B2;
+    --trait: #2C3743; --bleu: #6FA3F0; --rouge: #F07A6E; --vert: #5CC58A;
+    --jaune: #E6C04A; --violet: #A993F0; --focus: #6FA3F0;
+  }
+}
+:root[data-theme="dark"] {
+  --fond: #121820; --surface: #1B232D; --encre: #E8ECEF; --encre-douce: #9AA6B2;
+  --trait: #2C3743; --bleu: #6FA3F0; --rouge: #F07A6E; --vert: #5CC58A;
+  --jaune: #E6C04A; --violet: #A993F0; --focus: #6FA3F0;
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font: 400 16px/1.5 "Barlow", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 1180px; margin: 0 auto; padding: 0 20px 56px; }
+
+/* ====== En-tête ====== */
+.entete {
+  position: relative;
+  padding: 44px 0 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: end;
+  overflow: hidden;
+}
+.entete h1 {
+  margin: 0;
+  font: 700 clamp(44px, 8vw, 84px)/0.9 "Barlow Condensed", "Arial Narrow", sans-serif;
+  letter-spacing: -0.01em;
+}
+.entete p { margin: 10px 0 0; color: var(--encre-douce); font-size: 17px; }
+.terrain { width: 260px; height: auto; display: block; }
+.terrain path, .terrain circle, .terrain line, .terrain rect { fill: none; stroke-width: 3; stroke-linecap: round; }
+@media (max-width: 700px) { .terrain { display: none; } .entete { grid-template-columns: 1fr; padding-top: 28px; } }
+
+/* ====== Recherche ====== */
+.recherche {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--fond);
+  padding: 12px 0 14px;
+  border-bottom: 1px solid var(--trait);
+  margin-bottom: 8px;
+}
+.recherche label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.champ { position: relative; max-width: 560px; }
+.champ svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--encre-douce); }
+.champ input {
+  width: 100%;
+  font: inherit;
+  font-size: 17px;
+  padding: 12px 64px 12px 42px;
+  border: 2px solid var(--trait);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--encre);
+}
+.champ input:focus { outline: none; border-color: var(--focus); }
+.champ kbd {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font: 500 13px "Barlow", sans-serif; color: var(--encre-douce);
+  border: 1px solid var(--trait); border-radius: 4px; padding: 1px 7px;
+}
+@media (hover: none) { .champ kbd { display: none; } }
+
+/* ====== Sections ====== */
+section { margin-top: 36px; }
+section h2 {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 0 14px;
+  font: 700 26px/1.1 "Barlow Condensed", "Arial Narrow", sans-serif;
+}
+section h2::before {
+  content: ""; width: 28px; height: 4px; border-radius: 2px; background: var(--c, var(--encre));
+}
+section h2 small { font: 500 15px "Barlow", sans-serif; color: var(--encre-douce); }
+
+.grille {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+/* ====== Tuile d'appli ====== */
+.appli {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 44px 14px 14px;
+  background: var(--surface);
+  border: 1px solid var(--trait);
+  border-left: 4px solid var(--c, var(--encre));
+  border-radius: 6px;
+  min-height: 76px;
+}
+.appli:hover { border-color: var(--c); border-left-color: var(--c); }
+.appli:focus-within { outline: 3px solid var(--focus); outline-offset: 2px; }
+.emoji {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  font-size: 24px; line-height: 1;
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  border-radius: 6px;
+}
+.appli h3 { margin: 1px 0 2px; font: 600 16px/1.25 "Barlow", sans-serif; }
+.appli h3 a { color: inherit; text-decoration: none; }
+.appli h3 a::after { content: ""; position: absolute; inset: 0; } /* toute la tuile est cliquable */
+.appli h3 a:focus { outline: none; }
+.appli p { margin: 0; font-size: 14px; color: var(--encre-douce); line-height: 1.35; }
+.appli .liens { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.appli .liens a {
+  position: relative; z-index: 1;
+  font-size: 13px; font-weight: 500; color: var(--c); text-decoration: underline; text-underline-offset: 2px;
+}
+.epingle {
+  position: absolute; z-index: 2; top: 8px; right: 8px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  background: none; border: 0; border-radius: 6px; cursor: pointer;
+  color: var(--encre-douce); opacity: .45;
+}
+.epingle svg { width: 18px; height: 18px; }
+.appli:hover .epingle, .epingle:focus-visible, .epingle[aria-pressed="true"] { opacity: 1; }
+.epingle[aria-pressed="true"] { color: var(--jaune); }
+.epingle[aria-pressed="true"] svg { fill: currentColor; }
+.epingle:focus-visible { outline: 2px solid var(--focus); }
+@media (hover: none) { .epingle { opacity: .8; } }
+
+.vide {
+  margin-top: 40px; padding: 28px; text-align: center;
+  border: 2px dashed var(--trait); border-radius: 8px; color: var(--encre-douce);
+}
+.vide button {
+  margin-top: 10px; font: 600 15px "Barlow", sans-serif; cursor: pointer;
+  padding: 8px 16px; border-radius: 6px; border: 2px solid var(--encre); background: none; color: var(--encre);
+}
+
+/* ====== Outils ====== */
+.outils { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--trait); }
+.outils h2 { font-size: 20px; }
+.outils ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.outils a {
+  display: inline-block; padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--trait); background: var(--surface);
+  color: var(--encre); text-decoration: none; font-size: 14px; font-weight: 500;
+}
+.outils a:hover { border-color: var(--encre-douce); }
+.outils a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .terrain .trace { stroke-dasharray: 1; stroke-dashoffset: 1; animation: tracer 1.4s ease-out forwards; }
+  .terrain .trace:nth-child(2) { animation-delay: .15s; }
+  .terrain .trace:nth-child(3) { animation-delay: .3s; }
+  .terrain .trace:nth-child(4) { animation-delay: .45s; }
+  .terrain .trace:nth-child(5) { animation-delay: .6s; }
+  @keyframes tracer { to { stroke-dashoffset: 0; } }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="entete">
+    <div>
+      <h1>Mes applis EPS</h1>
+      <p id="sousTitre">Toutes les applis au même endroit.</p>
+    </div>
+    <!-- Lignes de terrain entremêlées, comme au sol d'un gymnase -->
+    <svg class="terrain" viewBox="0 0 260 150" aria-hidden="true">
+      <rect class="trace" pathLength="1" x="4" y="10" width="252" height="130" rx="2" stroke="var(--bleu)"/>
+      <line class="trace" pathLength="1" x1="130" y1="10" x2="130" y2="140" stroke="var(--rouge)"/>
+      <circle class="trace" pathLength="1" cx="130" cy="75" r="26" stroke="var(--rouge)"/>
+      <path class="trace" pathLength="1" d="M4 30 H60 V120 H4" stroke="var(--vert)"/>
+      <path class="trace" pathLength="1" d="M256 22 A70 70 0 0 0 256 128" stroke="var(--jaune)"/>
+    </svg>
+  </header>
+
+  <div class="recherche" role="search">
+    <label for="q">Rechercher une appli</label>
+    <div class="champ">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Rechercher : badminton, séjour, équipes…" autocomplete="off">
+      <kbd>/</kbd>
+    </div>
+  </div>
+
+  <main id="contenu"></main>
+
+  <footer class="outils">
+    <section style="margin-top:0">
+      <h2 style="--c: var(--encre-douce)">Mes outils</h2>
+      <ul id="outils"></ul>
+    </section>
+  </footer>
+</div>
+
+<script>
+/* =====================================================================
+   LISTE DES APPLIS : c'est la seule partie à modifier.
+   Pour ajouter une appli, copiez une ligne { ... } et changez :
+     nom, url, emoji, cat (id d'une catégorie ci-dessous), desc.
+   "liens" (facultatif) ajoute des liens secondaires sous la tuile.
+   ===================================================================== */
+
+const CATEGORIES = [
+  { id: "cours",    nom: "En cours d'EPS",               couleur: "--bleu" },
+  { id: "tournois", nom: "Tournois et compétitions",      couleur: "--rouge" },
+  { id: "projets",  nom: "Projets, séjours et parcours",  couleur: "--vert" },
+  { id: "orga",     nom: "Organisation",                  couleur: "--jaune" },
+  { id: "univ",     nom: "Université PSL Dauphine",       couleur: "--violet" },
+];
+
+const APPLIS = [
+  // En cours d'EPS
+  { nom: "Compositeur d'équipes", url: "https://floe2.github.io/Generateur_team_YDM/", emoji: "👥", cat: "cours", desc: "Former des équipes équilibrées" },
+  { nom: "Observateur match", url: "https://floe2.github.io/Compteur_YDM_EPS/", emoji: "📋", cat: "cours", desc: "Relever les actions pendant un match" },
+  { nom: "Circuit Training WOD", url: "https://floe2.github.io/circuit-training-ydm/", emoji: "💪", cat: "cours", desc: "Lancer le WOD de la séance" },
+  { nom: "EPS Tracker", url: "https://floe2.github.io/EPStrackerYDM/", emoji: "📈", cat: "cours", desc: "Suivi de la condition physique" },
+  { nom: "Volume sonore", url: "https://floe2.github.io/sonometre-de-classe/", emoji: "🔊", cat: "cours", desc: "Sonomètre de classe" },
+
+  // Tournois et compétitions
+  { nom: "Tournoi Badminton", url: "https://floe2.github.io/tournoi-badminton/", emoji: "🏸", cat: "tournois", desc: "Collège Yves du Manoir" },
+  { nom: "Échelle de badminton", url: "https://floe2.github.io/MDCamille/", emoji: "🥇", cat: "tournois", desc: "Classement par défis" },
+  { nom: "Tournois EPS", url: "https://floe2.github.io/tournoipoule/", emoji: "🏆", cat: "tournois", desc: "Poules et classements" },
+  { nom: "Tournoi Mölkky", url: "https://floe2.github.io/molkky/", emoji: "🎯", cat: "tournois", desc: "Scores et classement" },
+  { nom: "Tournoi Recyclerie", url: "https://floe2.github.io/RecyclerieYDM-tournoi/", emoji: "♻️", cat: "tournois", desc: "Avec Florian et Emeric" },
+  { nom: "Challenge Biathlon 3e", url: "https://floe2.github.io/challenge-biathlon-YDM/", emoji: "⏱️", cat: "tournois", desc: "Course et précision" },
+  { nom: "Flag Master", url: "https://floe2.github.io/Flag/", emoji: "🏈", cat: "tournois", desc: "Collège Yves du Manoir" },
+
+  // Projets, séjours et parcours
+  { nom: "Projet EPS du collège", url: "https://floe2.github.io/projet-eps-ydm-2026/", emoji: "🗂️", cat: "projets", desc: "Projet pédagogique EPS 2026" },
+  { nom: "Parcours éducatif de santé", url: "https://floe2.github.io/parcourssanteeps/", emoji: "🍎", cat: "projets", desc: "Collège Yves du Manoir" },
+  { nom: "Heure Bleue 6e B", url: "https://floe2.github.io/methodo6eme/", emoji: "📘", cat: "projets", desc: "Apprendre à apprendre" },
+  { nom: "PSC1, chapitre 3", url: "https://floe2.github.io/PSCydm/", emoji: "🩹", cat: "projets", desc: "Traumatismes" },
+  { nom: "Voyage à travers l'Europe", url: "https://floe2.github.io/voyage-europe/", emoji: "🌍", cat: "projets", desc: "Classes 5A et 5B" },
+  { nom: "Séjour Cohésion Montagne", url: "https://floe2.github.io/cohesion_montagne/", emoji: "🏔️", cat: "projets", desc: "Séjour YDM",
+    liens: [{ nom: "Journal du séjour", url: "https://www.ondonnedesnouvelles.com/journal/019d06cd-dcd9-71e6-9c3c-114eacf0c2b0/beforeDeparture" }] },
+
+  // Organisation
+  { nom: "Pilotage des projets", url: "https://floe2.github.io/planning-YDM/", emoji: "🧭", cat: "orga", desc: "Année 2026-2027" },
+  { nom: "Emploi du temps EPS", url: "https://floe2.github.io/edtydm/", emoji: "🗓️", cat: "orga", desc: "Créneaux et installations" },
+
+  // Université PSL Dauphine
+  { nom: "Compositeur Circuit Training", url: "https://floe2.github.io/circuit-training-PSL-Dauphine/", emoji: "🔁", cat: "univ", desc: "SUAPS" },
+  { nom: "Sport Santé", url: "https://mzbe2.github.io/sport-sante-psl/", emoji: "❤️", cat: "univ", desc: "PSL Dauphine" },
+  { nom: "Sélection Basket FFSU", url: "https://floe2.github.io/LDVDraft2026/", emoji: "🏀", cat: "univ", desc: "Draft 2026",
+    liens: [{ nom: "Version lecture seule", url: "https://floe2.github.io/LDVDraft2026/?readonly=1" }] },
+];
+
+const OUTILS = [
+  { nom: "Claude", url: "https://claude.ai/new" },
+  { nom: "ChatGPT", url: "https://chatgpt.com/" },
+  { nom: "GitHub", url: "https://github.com/" },
+  { nom: "Firebase", url: "https://console.firebase.google.com/u/0/" },
+  { nom: "Netlify", url: "https://app.netlify.com/teams/floe2/projects" },
+  { nom: "Supabase", url: "https://supabase.com/dashboard/org/gdpgfijsmfnhwxkjqazj" },
+  { nom: "StackBlitz", url: "https://stackblitz.com/" },
+  { nom: "cron-job.org", url: "https://console.cron-job.org/dashboard" },
+  { nom: "Magistère", url: "https://versailles.magistere.apps.education.fr/my/courses.php" },
+];
+
+/* ============================ Fonctionnement ============================ */
+
+const CLE_EPINGLES = "hubEps.epingles";
+let epingles = [];
+try { epingles = JSON.parse(localStorage.getItem(CLE_EPINGLES)) || []; } catch (e) { epingles = []; }
+const sauverEpingles = () => { try { localStorage.setItem(CLE_EPINGLES, JSON.stringify(epingles)); } catch (e) {} };
+
+const normaliser = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const echap = (t) => t.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const catDe = (id) => CATEGORIES.find((c) => c.id === id) || { nom: "", couleur: "--encre" };
+
+const ETOILE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
+
+function tuile(a) {
+  const cat = catDe(a.cat);
+  const estEpinglee = epingles.includes(a.url);
+  const liens = (a.liens || []).map((l) =>
+    `<a href="${echap(l.url)}" target="_blank" rel="noopener">${echap(l.nom)}</a>`).join("");
+  return `<li class="appli" style="--c: var(${cat.couleur})">
+    <span class="emoji" aria-hidden="true">${a.emoji || "•"}</span>
+    <div>
+      <h3><a href="${echap(a.url)}" target="_blank" rel="noopener">${echap(a.nom)}</a></h3>
+      <p>${echap(a.desc || "")}</p>
+      ${liens ? `<div class="liens">${liens}</div>` : ""}
+    </div>
+    <button class="epingle" type="button" data-url="${echap(a.url)}" aria-pressed="${estEpinglee}"
+      aria-label="${estEpinglee ? "Retirer" : "Épingler"} ${echap(a.nom)}" title="${estEpinglee ? "Retirer des épinglées" : "Épingler en haut de la page"}">${ETOILE}</button>
+  </li>`;
+}
+
+function section(titre, couleur, liste, compteur = true) {
+  return `<section style="--c: var(${couleur})">
+    <h2>${echap(titre)}${compteur ? ` <small>${liste.length}</small>` : ""}</h2>
+    <ul class="grille">${liste.map(tuile).join("")}</ul>
+  </section>`;
+}
+
+const main = document.getElementById("contenu");
+const champ = document.getElementById("q");
+
+function afficher() {
+  const q = normaliser(champ.value.trim());
+  let html = "";
+
+  if (q) {
+    const resultats = APPLIS.filter((a) =>
+      normaliser(`${a.nom} ${a.desc || ""} ${catDe(a.cat).nom} ${a.url}`).includes(q));
+    if (resultats.length) {
+      html = section(resultats.length > 1 ? "Résultats" : "Résultat", "--encre", resultats);
+    } else {
+      html = `<div class="vide">Aucune appli ne correspond à « ${echap(champ.value.trim())} ».<br>
+        <button type="button" id="effacer">Effacer la recherche</button></div>`;
+    }
+  } else {
+    const epinglees = epingles.map((u) => APPLIS.find((a) => a.url === u)).filter(Boolean);
+    if (epinglees.length) html += section("Épinglées", "--jaune", epinglees, false);
+    for (const c of CATEGORIES) {
+      const liste = APPLIS.filter((a) => a.cat === c.id);
+      if (liste.length) html += section(c.nom, c.couleur, liste);
+    }
+  }
+  main.innerHTML = html;
+}
+
+main.addEventListener("click", (e) => {
+  const bouton = e.target.closest(".epingle");
+  if (bouton) {
+    const url = bouton.dataset.url;
+    epingles = epingles.includes(url) ? epingles.filter((u) => u !== url) : [...epingles, url];
+    sauverEpingles();
+    afficher();
+    const meme = main.querySelector(`.epingle[data-url="${CSS.escape(url)}"]`);
+    if (meme) meme.focus();
+    return;
+  }
+  if (e.target.id === "effacer") { champ.value = ""; afficher(); champ.focus(); }
+});
+
+champ.addEventListener("input", afficher);
+champ.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {                     // Entrée ouvre le premier résultat
+    const premier = main.querySelector(".appli h3 a");
+    if (premier && champ.value.trim()) window.open(premier.href, "_blank", "noopener");
+  }
+  if (e.key === "Escape") { champ.value = ""; afficher(); }
+});
+document.addEventListener("keydown", (e) => {   // « / » place le curseur dans la recherche
+  if (e.key === "/" && document.activeElement !== champ) { e.preventDefault(); champ.focus(); }
+});
+
+document.getElementById("outils").innerHTML = OUTILS.map((o) =>
+  `<li><a href="${echap(o.url)}" target="_blank" rel="noopener">${echap(o.nom)}</a></li>`).join("");
+document.getElementById("sousTitre").textContent =
+  `${APPLIS.length} applis au même endroit. Épinglez celles que vous utilisez le plus.`;
+
+afficher();
+</script>
+</body>
+</html>
