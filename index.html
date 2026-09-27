@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mes applis EPS</title>
+<title>Mes applis EPS | Florian Eude, collège Yves du Manoir</title>
 <meta name="theme-color" content="#F2F4F1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Applis EPS">
@@ -67,7 +67,13 @@ body {
   font: 700 clamp(44px, 8vw, 84px)/0.9 "Barlow Condensed", "Arial Narrow", sans-serif;
   letter-spacing: -0.01em;
 }
-.entete p { margin: 10px 0 0; color: var(--encre-douce); font-size: 17px; }
+.entete .auteur {
+  margin: 0 0 14px; color: var(--encre); font-size: 17px; font-weight: 600;
+  display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline;
+}
+.entete .auteur span { font-weight: 400; color: var(--encre-douce); }
+.entete .auteur span::before { content: ""; display: inline-block; width: 14px; height: 3px; border-radius: 2px; background: var(--bleu); vertical-align: middle; margin-right: 10px; }
+.entete p#sousTitre { margin: 10px 0 0; color: var(--encre-douce); font-size: 17px; }
 .terrain { width: 260px; height: auto; display: block; }
 .terrain path, .terrain circle, .terrain line, .terrain rect { fill: none; stroke-width: 3; stroke-linecap: round; }
 @media (max-width: 700px) { .terrain { display: none; } .entete { grid-template-columns: 1fr; padding-top: 28px; } }
@@ -202,6 +208,7 @@ section h2 small { font: 500 15px "Barlow", sans-serif; color: var(--encre-douce
 
   <header class="entete">
     <div>
+      <p class="auteur">Florian Eude<span>Collège Yves du Manoir, Vaucresson</span></p>
       <h1>Mes applis EPS</h1>
       <p id="sousTitre">Toutes les applis au même endroit.</p>
     </div>
