@@ -24,6 +24,7 @@
   --vert: #1D8047;     /* badminton */
   --jaune: #C99A00;    /* hand */
   --violet: #6A4FB5;
+  --orange: #D2631C;   /* association sportive */
   --focus: #1E5DBA;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -33,13 +34,13 @@
   :root:not([data-theme="light"]) {
     --fond: #121820; --surface: #1B232D; --encre: #E8ECEF; --encre-douce: #9AA6B2;
     --trait: #2C3743; --bleu: #6FA3F0; --rouge: #F07A6E; --vert: #5CC58A;
-    --jaune: #E6C04A; --violet: #A993F0; --focus: #6FA3F0;
+    --jaune: #E6C04A; --violet: #A993F0; --orange: #F29A5C; --focus: #6FA3F0;
   }
 }
 :root[data-theme="dark"] {
   --fond: #121820; --surface: #1B232D; --encre: #E8ECEF; --encre-douce: #9AA6B2;
   --trait: #2C3743; --bleu: #6FA3F0; --rouge: #F07A6E; --vert: #5CC58A;
-  --jaune: #E6C04A; --violet: #A993F0; --focus: #6FA3F0;
+  --jaune: #E6C04A; --violet: #A993F0; --orange: #F29A5C; --focus: #6FA3F0;
 }
 *, *::before, *::after { box-sizing: inherit; }
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -260,6 +261,7 @@ section h2 small { font: 500 15px "Barlow", sans-serif; color: var(--encre-douce
 
 const CATEGORIES = [
   { id: "cours",    nom: "En cours d'EPS",               couleur: "--bleu" },
+  { id: "as",       nom: "Association sportive",          couleur: "--orange" },
   { id: "tournois", nom: "Tournois et compétitions",      couleur: "--rouge" },
   { id: "projets",  nom: "Projets, séjours et parcours",  couleur: "--vert" },
   { id: "orga",     nom: "Organisation",                  couleur: "--jaune" },
@@ -273,6 +275,9 @@ const APPLIS = [
   { nom: "Circuit Training WOD", url: "https://floe2.github.io/circuit-training-ydm/", emoji: "💪", cat: "cours", desc: "Lancer le WOD de la séance" },
   { nom: "EPS Tracker", url: "https://floe2.github.io/EPStrackerYDM/", emoji: "📈", cat: "cours", desc: "Suivi de la condition physique" },
   { nom: "Volume sonore", url: "https://floe2.github.io/sonometre-de-classe/", emoji: "🔊", cat: "cours", desc: "Sonomètre de classe" },
+
+  // Association sportive
+  { nom: "Appel AS", url: "https://floe2.github.io/ASYDM/", emoji: "✅", cat: "as", desc: "Appel du mercredi et fiches élèves" },
 
   // Tournois et compétitions
   { nom: "Tournoi Badminton", url: "https://floe2.github.io/tournoi-badminton/", emoji: "🏸", cat: "tournois", desc: "Collège Yves du Manoir" },
